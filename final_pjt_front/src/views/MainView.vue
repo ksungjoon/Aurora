@@ -27,7 +27,7 @@ export default {
   },
   data() {
     return {
-      genreid: '0' // 문자열로 변경하여 일치성을 검사합니다.
+      genreid: '0'
     };
   },
   created() {
@@ -43,7 +43,7 @@ export default {
       return this.$store.state.movieStore.genres;
     },
     filteredMovies() {
-      if (this.genreid === '0') { // 값 비교를 문자열로 변경합니다.
+      if (this.genreid === '0') {
         return this.limitedMovies;
       } else {
         return this.limitedMovies.filter(movie => movie.genres.some(genre => genre.id === this.genreid));
