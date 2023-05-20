@@ -3,8 +3,8 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from django.shortcuts import render, get_object_or_404, get_list_or_404
-from .models import Movie, Comment
-from .serializers.movie import MovieListSerializer
+from .models import Movie, Comment, Genre
+from .serializers.movie import MovieListSerializer, GenreListSerializer
 from .serializers.comment import CommentSerializer 
 
 # Create your views here.
@@ -60,3 +60,9 @@ def comment_create(request, movie_pk):
     if serializer.is_valid(raise_exception=True):
         serializer.save(movie=movie, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+@api_view(['GET'])
+def genrelist(request):
+    genres = Genre.objects.all()
+    serializer = GenreListSerializer(genres, many=True)
+    return Response(serializer.data)

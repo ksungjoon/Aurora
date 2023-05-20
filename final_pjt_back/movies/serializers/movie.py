@@ -8,20 +8,22 @@ from ..models import Movie, Genre, Comment
 #         model = Movie
 #         fields = ('title',)
 
-class GenreSerializer(serializers.ModelSerializer):
-    # movies = MovietitleSerializer(many=True, read_only=True)
+# class GenreSerializer(serializers.ModelSerializer):
+#     # movies = MovietitleSerializer(many=True, read_only=True)
+#     class Meta:
+#         model = Genre
+#         fields = '__all__'
+
+class GenreListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
-        fields = '__all__'
+        fields = ('id', 'name')
+
 
 class MovieListSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True, read_only=True)
+    genres = GenreListSerializer(many=True, read_only=True, source='genre_ids')
+
     class Meta:
         model = Movie
         fields = ('id', 'title', 'release_date', 'popularity', 'vote_average', 'overview', 'poster_path', 'genres')
 
-class GenreListSerializer(serializers.ModelSerializer):
-    
-    class Meta:
-        model = Genre
-        fields = ('id', 'name',)
