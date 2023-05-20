@@ -1,0 +1,47 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import SignUpView from '@/views/SignUpView'
+import LogInView from '@/views/LogInView'
+import MovieDetail from '@/views/MovieDetail'
+import ProfileView from '@/views/ProfileView'
+import MainView from '../views/MainView.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    name: 'MovieView',
+    component: MainView
+  },
+  {
+    path: '/signup',
+    name: 'SignUpView',
+    component: SignUpView
+  },
+
+  {
+    path: '/login',
+    name: 'LogInView',
+    component: LogInView
+  },
+  {
+    path: '/:id',
+    name: 'MovieDetail',
+    component: MovieDetail
+  },
+  {
+    path: '/profile/:username',
+    name: 'ProfileView',
+    component: ProfileView
+  }
+
+]
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
+})
+
+export default router
