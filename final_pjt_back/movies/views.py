@@ -102,3 +102,33 @@ def like_movie_users(request, movie_id):
             'likes_count': likes_count,
         }
         return Response(data)
+    
+@api_view(['POST'])
+def watched_movie(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    user = request.user
+
+    if user in movie.watched_users.all():
+        movie.watched_users.remove(user)        
+    else:
+        movie.watched_users.add(user)
+    serializer = MovieListSerializer(movie)
+    data = {
+        'movie': serializer.data,
+    }
+    return Response(data)
+
+@api_view(['GET'])
+def watched_movie_users(request, movie_id):
+    if request.method == 'GET':
+        movie = Movie.objects.get(id=movie_id)
+        user = request.user     
+        if user in movie.watched_users.all():
+            watched = True
+        else:
+            watched = False
+
+        data ={
+            'watched': watched,
+        }
+        return Response(data)
