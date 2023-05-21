@@ -66,3 +66,50 @@ def genrelist(request):
     genres = Genre.objects.all()
     serializer = GenreListSerializer(genres, many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def like_movie(request, movie_id):
+    movie = Movie.objects.get(id=movie_id)
+    user = request.user
+
+    if user in movie.liked_users.all():
+        movie.liked_users.remove(user)
+        liked = False
+    else:
+        movie.liked_users.add(user)
+        liked = True
+
+    if movie.liked_users.count() == 0:
+        likes_count = 0
+    else:
+        likes_count = movie.liked_users.count()
+
+    serializer = MovieListSerializer(movie)
+    data = {
+        'liked': liked,
+        'likes_count': likes_count,
+        'movie': serializer.data,
+    }
+ 
+    return Response(data)
+
+@api_view(['GET'])
+def like_movie_users(request, movie_id):
+    if request.method == 'GET':
+        movie = Movie.objects.get(id=movie_id)
+        user = request.user     
+        if user in movie.liked_users.all():
+            liked = True
+        else:
+            liked = False
+        print(movie.liked_users.count())
+        if movie.liked_users.count() == 0:
+            likes_count = 0
+        else:
+            likes_count = movie.liked_users.count()
+
+        data ={
+            'liked': liked,
+            'likes_count': likes_count,
+        }
+        return Response(data)
