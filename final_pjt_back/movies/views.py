@@ -73,24 +73,13 @@ def like_movie(request, movie_id):
     user = request.user
 
     if user in movie.liked_users.all():
-        movie.liked_users.remove(user)
-        liked = False
+        movie.liked_users.remove(user)        
     else:
         movie.liked_users.add(user)
-        liked = True
-
-    if movie.liked_users.count() == 0:
-        likes_count = 0
-    else:
-        likes_count = movie.liked_users.count()
-
     serializer = MovieListSerializer(movie)
     data = {
-        'liked': liked,
-        'likes_count': likes_count,
         'movie': serializer.data,
     }
- 
     return Response(data)
 
 @api_view(['GET'])

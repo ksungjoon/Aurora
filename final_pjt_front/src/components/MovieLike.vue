@@ -35,11 +35,9 @@ export default {
         })
         .then((res)=>{
           console.log(res)
-          this.likedd = res.data.liked
-        })
-        .then(()=>{
           this.$emit('getmovielike')
         })
+      
         .catch((err)=>{
           console.log(err)
         })
