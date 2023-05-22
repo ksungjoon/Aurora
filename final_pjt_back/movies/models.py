@@ -20,8 +20,8 @@ class Movie(models.Model):
     vote_average = models.FloatField()
     vote_count = models.IntegerField(null=True)
     movie_id = models.IntegerField(null=True)
-    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
-
+    liked_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='like_movies')
+    watched_users = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='watched_movies')
     
     
     

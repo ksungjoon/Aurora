@@ -3,10 +3,12 @@
         <h1>Detail</h1>
         <p>글 번호 : {{ movie?.id }}</p>
         <p>제목 : {{ movie?.title }}</p>
-        <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/> 
+        <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
+        <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
         <CommentForm @create-comment="createComment" :movie="movie"/>
         <CommentList :movie="movie" :comments='comments'/>
         {{liked}} {{likes_count}}
+        {{watched}}
     </div>
 </template>
 
@@ -15,6 +17,7 @@ import axios from 'axios'
 import CommentForm from '@/components/CommentForm'
 import CommentList from '@/components/CommentList'
 import MovieLike from '@/components/MovieLike'
+import MovieWatched from '@/components/MovieWatched'
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -23,7 +26,8 @@ export default {
     components:{
         CommentForm,
         CommentList,
-        MovieLike
+        MovieLike,
+        MovieWatched
 
     },
     data() {
@@ -32,6 +36,7 @@ export default {
         comments:[],
         likes_count:0,
         liked:false,
+        watched:false,
         }
     },
     created() {
@@ -62,6 +67,7 @@ export default {
             this.movie = res.data
             this.getComments();
             this.getMovieLike()
+            this.getMovieWatched()
         })
         .catch((err) => {
             console.log(err)
@@ -80,9 +86,25 @@ export default {
             },
         })
         .then((res)=>{
-          console.log(res)
+        //   console.log(res)
           this.likes_count = res.data.likes_count
           this.liked = res.data.liked
+        })
+        .catch((err)=>{
+          console.log(err)
+        })
+        },
+        getMovieWatched(){
+        axios({
+          method:'get',
+          url:`${API_URL}/api/v1/movies/${ this.movie.id}/watched/count`,
+          headers: {
+                Authorization: `Token ${this.$store.state.loginStore.token}`,
+            },
+        })
+        .then((res)=>{
+          console.log(res)
+          this.watched = res.data.watched
         })
         .catch((err)=>{
           console.log(err)
