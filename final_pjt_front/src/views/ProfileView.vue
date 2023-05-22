@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>{{ getUsername }}의 프로필</h1>
+    <h1>{{ profile.username }}의 프로필</h1>
+    <button @click="look">클릭</button>
     <ProfileItem/>
     <div>좋아요한 영화</div>
     <ProfileLikeMovie
@@ -19,7 +20,6 @@
 
 <script>
 import axios from 'axios'
-// import MovieList from '@/components/MovieList.vue'
 import ProfileItem from '@/components/ProfileItem.vue'
 import ProfileLikeMovie from '@/components/ProfileLikeMovie.vue'
 import ProfileWatchedMovie from '@/components/ProfileWatchedMovie.vue'
@@ -28,58 +28,49 @@ const API_URL = 'http://127.0.0.1:8000'
 
 export default {
   name: 'ProfileView',
-    data() {
-        return {
-        like_movie:null,
-        watched_movie:null
-        }
-    },
-  created(){
-    this.likeMovieList()
-    this.watchedMovieList()
+  data() {
+    return {
+      like_movie: null,
+      watched_movie: null
+    }
   },
-
   components: {
     ProfileItem,
     ProfileLikeMovie,
-    ProfileWatchedMovie,
-    // MovieList
+    ProfileWatchedMovie
   },
+  // created(){
+  //   this.likeMovieList(),
+  //   this.watchedMovieList()
+  // },
   computed: {
-    ...mapGetters(['getUsername']),
+    ...mapGetters(['getUsername', 'profile']),
   },
-  methods:{
-    likeMovieList(){
-      axios({
-          method: "get",
-          url: `${API_URL}/accounts/profile/${this.getUsername}/`,
-        }).then((res) => {
-          console.log(res)
+  methods: {
+    look() {
+      this.likeMovieList();
+      this.watchedMovieList();
+    },
+    likeMovieList() {
+      axios.get(`${API_URL}/accounts/profile/${this.profile.username}/`)
+        .then((res) => {
           this.like_movie = res.data.like_movies;
-          console.log(this.like_movie);
         })
-        .catch((err)=>{
-            console.log(err);
-            this.like_movie = []
+        .catch((err) => {
+          console.log(err);
+          this.like_movie = [];
         });
     },
-    watchedMovieList(){
-      axios({
-          method: "get",
-          url: `${API_URL}/accounts/profile/${this.getUsername}/`,
-        }).then((res) => {
-          console.log(res)
+    watchedMovieList() {
+      axios.get(`${API_URL}/accounts/profile/${this.profile.username}/`)
+        .then((res) => {
           this.watched_movie = res.data.watched_movies;
-          console.log(this.watched_movie);
         })
-        .catch((err)=>{
-            console.log(err);
-            this.watched_movie = []
+        .catch((err) => {
+          console.log(err);
+          this.watched_movie = [];
         });
-    },
+    }
   }
 };
 </script>
-
-<style>
-</style>
