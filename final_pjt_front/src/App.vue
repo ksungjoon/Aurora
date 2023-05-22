@@ -12,6 +12,14 @@
         <router-link to="/login">Login</router-link> | 
         <router-link to="/signup">SignUp</router-link>
       </template>
+      <div>
+        <div class="search-form">
+          <div class="search-box">
+            <input type="text" @keydown.enter="searchMovies" v-model="searchKeyword"/>
+              <span></span>
+            </div>
+          </div>
+        </div>
     </nav>
     <router-view/>
   </div>
@@ -22,14 +30,28 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      searchKeyword: "",
+    };
+  },
   computed: {
     ...mapGetters(['isLogin', 'getUsername']),
   },
   methods: {
-    ...mapActions(['logout']),
+    ...mapActions(['logout', 'loadTotalMovies']),
+    searchMovies() {
+      const searchRoute = {
+        name: 'SearchView',
+        params: { keyword: this.searchKeyword },
+      };
+      this.$router.push(searchRoute);
+      this.searchKeyword=""
+    },
   },
 };
 </script>
+
 
 <style>
 #app {

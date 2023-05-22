@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios'
+// import MovieList from '@/components/MovieList.vue'
 import ProfileItem from '@/components/ProfileItem.vue'
 import ProfileLikeMovie from '@/components/ProfileLikeMovie.vue'
 import ProfileWatchedMovie from '@/components/ProfileWatchedMovie.vue'
@@ -41,7 +42,8 @@ export default {
   components: {
     ProfileItem,
     ProfileLikeMovie,
-    ProfileWatchedMovie
+    ProfileWatchedMovie,
+    // MovieList
   },
   computed: {
     ...mapGetters(['getUsername']),
