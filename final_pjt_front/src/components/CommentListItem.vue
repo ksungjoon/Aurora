@@ -1,12 +1,21 @@
 <template>
-  <div>
-    <p @click="navigateToProfile">{{ comment.user.username }}</p>
-    <div>{{ comment.content }}</div>
-    <div>{{ comment.score }}</div>
-    <div>{{ comment }}</div>
-    <button @click="deleteComment">삭제</button>
+  <div class = "card mb-2">
+    <div>
+      <div class="card-header bg-light d-flex justify-content-start align-items-center">
+        <div class=" d-flex align-items-center"><p class="mr-7" @click="navigateToProfile">작성자: {{ comment.user.username }}</p></div>
+        <div class=" d-flex align-items-center"><p class="ml-2 align-items-center"><img src="@/assets/star.png" alt="" class="star">: {{ comment.score }}</p></div>
+      </div>
+      <br>
+      <div>
+        <p>{{ comment.content }}</p>
+        <!-- <p>{{ comment.content }}</p> -->
+      </div>
+      <div><p class='text-muted'>작성일시: {{ formatDate(comment.created_at) }}</p></div>
+      <button type="button" class="btn btn-dark mt-3"  @click="deleteComment">삭제</button>
+    </div>
   </div>
 </template>
+
 
 <script>
 import { mapGetters } from 'vuex';
@@ -55,7 +64,25 @@ export default {
           console.log(err);
         });
     },
+    formatDate(dateTime) {
+      const date = new Date(dateTime);
+      return date.toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+      });
+    },
   },
 };
 </script>
 
+<style scoped>
+.star {
+    height:20px;
+    width: 20px;
+    margin: 5px;
+}
+</style>

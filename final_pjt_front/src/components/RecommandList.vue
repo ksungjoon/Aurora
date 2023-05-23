@@ -48,7 +48,7 @@ export default {
             );
 
             // 인기도로 정렬된 영화 목록
-            const sortedMovies = moviesWithSameGenre.sort((a, b) => b.popularity - a.popularity);
+            const sortedMovies = moviesWithSameGenre.sort((a, b) => b.vote_average - a.vote_average);
 
             // 상위 5개 영화 반환
             return sortedMovies.slice(0, 5);
