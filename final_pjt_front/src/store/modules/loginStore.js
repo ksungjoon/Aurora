@@ -93,22 +93,23 @@ const loginStore ={
                 })
         },
         fetchProfile(context, username) {
-            axios({
-              url:`${API_URL}/accounts/profile/${username}/`,
-              method: 'get',
-              headers: {Authorization: `Token ${context.state.token}`}
-            })
-              .then(res => {
-                console.log('hi')
-                context.commit('SET_PROFILE', res.data)
-              })
-              .catch(err => {
-                console.log(err)
-                // if (err.response.status === 404) {
-                //   router.push({ name: 'NotFound404' })
-                // }
-              })
-            },
+            return new Promise((resolve, reject) => {
+        axios({
+        url: `${API_URL}/accounts/profile/${username}/`,
+        method: 'get',
+        headers: { Authorization: `Token ${context.state.token}` }
+        })
+        .then(res => {
+            context.commit('SET_PROFILE', res.data);
+            resolve(); // 업데이트 완료를 알리는 Promise를 resolve
+        })
+        .catch(err => {
+            console.log(err);
+            reject(err); // 에러가 발생한 경우에도 reject
+        });
+    });
+},
+
         
     },
     modules: {
