@@ -1,28 +1,45 @@
 <template>
-  <div>
+  <div class="profile-container">
+    <div class="d-flex justify-content-between">
     <h1>{{ getUsername }}의 프로필</h1>
-    <!-- <button @click="look">클릭</button> -->
-    <!-- <ProfileItem/> -->
-    <p>{{this.followers}}</p>
-    <p>{{this.followings}}</p>
-    <div>좋아요한 영화</div>
-    <ProfileLikeMovie
-      v-for="likemovie in like_movie"
-      :key="likemovie.id"
-      :likemovie="likemovie"
-    />
-    <div>봤던 영화</div>
-    <ProfileWatchedMovie
-      v-for="watchedmovie in watched_movie"
-      :key="watchedmovie.id"
-      :watchedmovie="watchedmovie"
-    />
+      <div>
+        <h4>팔로워</h4>
+        <h5>{{this.followers}}</h5>
+        <h4>팔로잉</h4>
+        <h5>{{this.followings}}</h5>
+      </div>
+    </div>
+    <div class="section-title">좋아요한 영화</div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <ProfileLikeMovie
+        v-for="likemovie in like_movie"
+        :key="likemovie.id"
+        :likemovie="likemovie"
+      />
+    </div>
+      <p v-if="!like_movie.length" class="d-flex justify-content-center">
+        <br>
+        좋아요 누른 영화가 없어요 ㅠㅠ
+        <br>
+      </p>
+    <div class="section-title">봤던 영화</div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <ProfileWatchedMovie
+        v-for="watchedmovie in watched_movie"
+        :key="watchedmovie.id"
+        :watchedmovie="watchedmovie"
+      />
+    </div>
+      <p v-if="!watched_movie.length"  class="d-flex justify-content-center">
+        <br>
+        본 영화가 없어요 ㅠㅠ
+        <br>
+      </p>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-// import ProfileItem from '@/components/ProfileItem.vue'
 import ProfileLikeMovie from '@/components/ProfileLikeMovie.vue'
 import ProfileWatchedMovie from '@/components/ProfileWatchedMovie.vue'
 import { mapGetters } from 'vuex';
@@ -39,7 +56,7 @@ export default {
     }
   },
   components: {
-    // ProfileItem,
+
     ProfileLikeMovie,
     ProfileWatchedMovie
   },
@@ -52,10 +69,6 @@ export default {
     ...mapGetters(['getUsername', 'profile']),
   },
   methods: {
-    // look() {
-    //   this.likeMovieList();
-    //   this.watchedMovieList();
-    // },
     likeMovieList() {
       axios.get(`${API_URL}/accounts/profile/${this.getUsername}/`)
         .then((res) => {
@@ -97,3 +110,81 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
+/* Customize ProfileItem component styles */
+/* Example styles */
+.profile-item {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.profile-item h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.profile-item p {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Customize ProfileLikeMovie component styles */
+/* Example styles */
+.profile-like-movie {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-like-movie img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.profile-like-movie h3 {
+  font-size: 16px;
+}
+
+/* Customize ProfileWatchedMovie component styles */
+/* Example styles */
+.profile-watched-movie {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-watched-movie img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.profile-watched-movie h3 {
+  font-size: 16px;
+}
+
+</style>

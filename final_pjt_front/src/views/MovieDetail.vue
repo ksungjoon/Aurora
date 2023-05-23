@@ -1,10 +1,31 @@
 <template>
-    <div>
-        <h1>Detail</h1>
-        <p>글 번호 : {{ movie?.id }}</p>
-        <p>제목 : {{ movie?.title }}</p>
-        <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
-        <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="image-box">
+                <img :src="movie?.poster_path" class="rounded image-thumbnail" alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                <h1>{{ movie?.title }}</h1>
+                <br>
+                <p>줄거리: {{ movie?.overview }}</p>
+                <p>
+                    <img src="@/assets/star.png" alt="" class='star'>
+                    {{ movie?.vote_average }}</p>
+                </div>
+                <br>
+                <div v-if="isLogin">
+                    <div>
+                    <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
+                    <br>
+                    <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <CommentForm @create-comment="createComment" :movie="movie"/>
         <CommentList :movie="movie" :comments='comments'/>
         <!-- {{liked}} {{likes_count}}
@@ -18,6 +39,7 @@ import CommentForm from '@/components/CommentForm'
 import CommentList from '@/components/CommentList'
 import MovieLike from '@/components/MovieLike'
 import MovieWatched from '@/components/MovieWatched'
+import { mapGetters } from 'vuex';
 
 const API_URL = 'http://127.0.0.1:8000'
 
@@ -41,6 +63,9 @@ export default {
     },
     created() {
         this.getMovieDetail()
+    },
+    computed: {
+    ...mapGetters(['isLogin', 'getUsername']),
     },
 
     methods: {
@@ -114,3 +139,27 @@ export default {
     }
 }
 </script>
+<style scoped>
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* .image-box {
+    width:380px;
+    height:220px;
+    overflow:hidden;
+    margin:0 auto;
+} */
+.image-thumbnail {
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.star {
+    height:30px;
+    width: 30px;
+    margin: 10px auto;
+}
+
+</style>
