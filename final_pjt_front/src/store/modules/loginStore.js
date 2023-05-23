@@ -93,6 +93,7 @@ const loginStore ={
                 })
         },
         fetchProfile(context, username) {
+<<<<<<< HEAD
             return new Promise((resolve, reject) => {
         axios({
         url: `${API_URL}/accounts/profile/${username}/`,
@@ -110,6 +111,24 @@ const loginStore ={
     });
 },
 
+=======
+            axios({
+              url:`${API_URL}/accounts/profile/${username}/`,
+              method: 'get',
+              headers: {Authorization: `Token ${context.state.token}`}
+            })
+              .then(res => {
+                console.log('hi')
+                context.commit('SET_PROFILE', res.data)
+              })
+              .catch(err => {
+                console.log(err)
+                // if (err.response.status === 404) {
+                //   router.push({ name: 'NotFound404' })
+                // }
+              })
+            },
+>>>>>>> 9300ffa0349c5414dbaade276e07a9ed5d7d9b87
         
     },
     modules: {
