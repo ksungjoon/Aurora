@@ -31,19 +31,39 @@ def upload_img(request, username):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-# @api_view(['POST'])
-# def follow(request, username):
-#     user = get_object_or_404(get_user_model(), username=username)
-#     if user != request.user:
-#         if user.followers.filter(pk=request.user.pk).exists():
-#             user.followers.remove(request.user)
-#             followed = False
-#         else:
-#             user.followers.add(request.user)
-#             followed = True
-#     context = {
-#         'followed' : followed,
-#     }
-#     # return Response(context, status=status.HTTP_200_OK)
-#     serializer = UserSerializer(user)
-#     return Response(serializer.data)
+@api_view(['POST'])
+def follow(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    if user !=  request.user:
+        if user.followers.filter(pk=request.user.pk).exists():
+            user.followers.remove(request.user)
+        else:
+            user.followers.add(request.user)       
+    # context = {
+    #     'followed' : followed,
+    # }
+    # return Response(context, status=status.HTTP_200_OK)
+    serializer = UserSerializer(user)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def follow_count(request, username):
+    user = get_object_or_404(get_user_model(), username=username)
+    if user.followers.filter(pk=request.user.pk).exists():
+        followed = True
+    else:
+        followed = False
+    if user.followers.filter(pk=request.user.pk).count()==0:
+        followers_count = 0
+    else:
+        followers_count = user.followings.filter(pk=request.user.pk).count()
+    if user.followings.filter(pk=request.user.pk).count()==0:
+        followings_count = 0
+    else:
+        followings_count = user.followings.filter(pk=request.user.pk).count()
+    data = {
+        'followed':followed,
+        'followers_count':followers_count,
+        'followings_count':followings_count
+    }
+    return Response(data) 

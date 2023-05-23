@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>{{comment.user.username}}</div>
+        <p @click="navigateToProfile">{{ comment.user.username }}</p>
+        <!-- <div>{{comment.user.username}}</div> -->
         <div>{{comment.content}}</div>
         <div>{{comment.score}}</div>
         <div>{{comment}}</div>
@@ -18,6 +19,17 @@ export default {
         comment :Object
     },
     methods: {
+        navigateToProfile() {
+            const username = this.comment.user.username;
+            console.log(username)
+            this.$store.dispatch('fetchProfile', username)
+        .then(() => {
+            this.$router.push({ name: 'ProfileView', params: { username: username } });
+        })
+        .catch((err) => {
+            console.log(err);
+        });   
+    },
     deleteComment() {
         axios({
             method: "delete",

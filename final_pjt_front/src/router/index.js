@@ -4,8 +4,10 @@ import SignUpView from '@/views/SignUpView'
 import LogInView from '@/views/LogInView'
 import MovieDetail from '@/views/MovieDetail'
 import ProfileView from '@/views/ProfileView'
+import MyProfileView from '@/views/MyProfileView'
 import SearchView from '@/views/SearchView'
 import MainView from '../views/MainView.vue'
+import RecommandView from '@/views/RecommandView.vue'
 
 Vue.use(VueRouter)
 
@@ -37,9 +39,19 @@ const routes = [
     component: ProfileView
   },
   {
+    path: '/myprofile/:username',
+    name: 'MyProfileView',
+    component: MyProfileView
+  },
+  {
     path: '/search/:keyword',
     name: 'SearchView',
     component: SearchView,
+  },
+  {
+    path: '/recommand/:username',
+    name: 'RecommandView',
+    component: RecommandView
   },
 ]
 

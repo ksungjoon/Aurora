@@ -3,8 +3,12 @@
     <nav>
       <router-link to="/">Movie</router-link> |
       <template v-if="isLogin">
+        <router-link :to="{ name: 'RecommandView', params: { username: getUsername } }">
+          Recommand
+        </router-link> |
         <a @click="logout">Logout</a> | 
-        <router-link :to="{ name: 'ProfileView', params: { username: getUsername } }">
+        <!-- <p @click="navigateToProfile">profile</p> -->
+        <router-link :to="{ name: 'MyProfileView', params: { username: getUsername } }">
           Profile
         </router-link>
       </template>
@@ -39,7 +43,8 @@ export default {
     ...mapGetters(['isLogin', 'getUsername']),
   },
   methods: {
-    ...mapActions(['logout', 'loadTotalMovies']),
+    ...mapActions(['logout', 'loadTotalMovies', 'fetchCurrentUser']),
+  
     searchMovies() {
       const searchRoute = {
         name: 'SearchView',
@@ -48,10 +53,21 @@ export default {
       this.$router.push(searchRoute);
       this.searchKeyword=""
     },
-  },
+//     navigateToProfile() {
+//       const username = this.getUsername;
+//       this.$store.dispatch('fetchProfile', username)
+//     .then(() => {
+//       this.$router.push({ name: 'ProfileView', params: { username: username } });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+// },
+
+
+  }
 };
 </script>
-
 
 <style>
 #app {

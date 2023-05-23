@@ -7,8 +7,8 @@
         <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
         <CommentForm @create-comment="createComment" :movie="movie"/>
         <CommentList :movie="movie" :comments='comments'/>
-        {{liked}} {{likes_count}}
-        {{watched}}
+        <!-- {{liked}} {{likes_count}}
+        {{watched}} -->
     </div>
 </template>
 
