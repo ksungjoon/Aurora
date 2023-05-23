@@ -6,7 +6,7 @@
         <option value="0">전체</option>
         <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
       </select>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+      <div class="row row-cols-1  row-cols-md-3 row-cols--5 g-4">
         <MovieList
           v-for="movie in displayedMovies"
           :key="movie.id"
