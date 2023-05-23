@@ -1,33 +1,36 @@
 <template>
-    <div class="mb-5">
-        <div class="card bg-dark">
-        <div>
-            <div>
-            <form class="mb-4">
-                <div class='form-group'>
-                <label for="score">평점:</label>
-                <select class="form-control" id="score" v-model="score">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                </select>
-                </div>
-                <div class='form-group'>
-                <textarea
-                class="form-control"
-                rows="3"
-                v-model.trim="comment"
-                @keyup.enter="createComment"
-                placeholder="댓글을 작성해주세요.  "
-                ></textarea>
-                </div>
-            </form>
-            </div>
+    <div class = "card mb-2">
+        <div class="card-header bg-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
+                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+            </svg>
+            REPLY
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="form-inline mb-2">
+                        <img src="@/assets/star.png" alt="" class='star'>
+                        <select class="form-control ml-2" id="score" v-model="score">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                    v-model.trim="comment"
+                    @keyup.enter="createComment"
+                    placeholder="댓글을 작성해주세요."
+                    ></textarea>
+                    <button type="button" class="btn btn-dark mt-3" @click="createComment">post reply</button>
+                </li>
+            </ul>
         </div>
     </div>
-    </div>
+
+    
 </template>
 
 <script>
@@ -79,3 +82,10 @@ export default {
     
 }
 </script>
+<style scoped>
+.star {
+    height:30px;
+    width: 30px;
+    margin: 10px auto;
+}
+</style>
