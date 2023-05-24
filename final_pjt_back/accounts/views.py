@@ -30,12 +30,17 @@ def upload_img(request, username):
 
     elif request.method == 'PUT':
         if request.user != user:
-            return Response({'profile':'권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'profile': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
 
-        serializer = UserImgSerializer(user, data=request.data)
+        serializer = UserImgSerializer(user, data=request.data, partial=True)
+        print(serializer)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
+            print('hello')
             return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    return Response({'profile': '잘못된 요청입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['POST'])
