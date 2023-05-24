@@ -1,5 +1,5 @@
 <template>
-    <div class ='comment-box'>
+    <div>
         <CommentListItem
             @delete-comment="deleteComment"
             v-for="(comment, index) in comments"
