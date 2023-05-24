@@ -1,5 +1,6 @@
 <template>
 <div>
+  <img :src="getImageUrl" alt="Profile Image">
 <div class="d-flex justify-content-end">
   <div class="p-2 bd-highlight">
   <h4>팔로워</h4>
@@ -31,6 +32,14 @@ export default {
     },
     computed: {
       ...mapGetters(['getUsername', 'profile']),
+      getImageUrl() {
+      const defaultProfileImg = require('@/assets/default_profile.jpg');
+      if (this.profile && this.profile.profile_img) {
+        return `http://localhost:8000${this.profile.profile_img}`;
+      } else {
+        return defaultProfileImg;
+      }
+    }
     },
     methods: {
       followUser(){
