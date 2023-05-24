@@ -61,6 +61,8 @@ export default {
 </script>
 
 <style scoped>
+/* @import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap'); */
+
 html,
 body {
   height: 100%;
@@ -71,11 +73,11 @@ body {
   background-size: cover;
   background-position: center center;
   min-height: 100%;
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Nene", Helvetica, Arial, sans-serif; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000000;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -83,7 +85,7 @@ body {
 
 nav {
   padding: 10px;
-  background-color: #0f3a53;
+  background-color:rgba(87, 79, 190, 0.432);;
   display: flex;
   justify-content: space-between;
 }

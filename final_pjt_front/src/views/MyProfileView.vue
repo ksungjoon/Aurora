@@ -12,9 +12,6 @@
     <img :src="profile_img" alt="Uploaded Image" v-if="profile_img">
       <input type="file" @change="handleFileUpload" ref="upimage">
       <button @click="uploadImage">이미지 업로드</button>
-      
-      
-      
       <div>
         <div @click="isFollowerViewed"><h4 >팔로워</h4></div>
         <h5>{{this.followers_length}}</h5>
@@ -64,7 +61,6 @@ export default {
   name: 'ProfileView',
   data() {
     return {
-<<<<<<< HEAD
       followermodal:false,
       followingmodal:false,
       like_movie: null,
@@ -73,14 +69,8 @@ export default {
       followings_length:null,
       followers:null,
       follwings:null,
-=======
-      like_movie: [],
-      watched_movie: [],
-      followers:null,
-      followings:null,
       imageFile: null,
       profile_img: '',
->>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
     }
   },
   components: {
@@ -137,7 +127,6 @@ export default {
         
       });
     },
-<<<<<<< HEAD
     isFollowerViewed(){
       this.followermodal=true
     },
@@ -150,7 +139,6 @@ export default {
     endFollowingViewed(){
       this.followingmodal=false
     },
-=======
     handleFileUpload(event) {
       this.imageFile = event.target.files[0];
       // console.log(this.imageFile)
@@ -183,7 +171,6 @@ export default {
       });
     }
 
->>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
   }
 }
 
