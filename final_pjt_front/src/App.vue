@@ -2,9 +2,6 @@
   <div id="app">
     <nav>
       <div class="nav-left">
-        <div class="logo">
-          <img src="@/assets/logo_ssafy_coke.png" alt="logo">
-        </div>
         <router-link to="/">Movie</router-link>
         <template v-if="isLogin">
           <router-link :to="{ name: 'RecommandView', params: { username: getUsername } }">
@@ -19,7 +16,7 @@
           </div>
         </div>
         <template v-if="isLogin">
-          <a @click="logout">Logout</a>
+          <a class="logout-link" @click="logout">Logout</a>
           <router-link :to="{ name: 'MyProfileView', params: { username: getUsername } }">
             Profile
           </router-link>
@@ -31,6 +28,7 @@
       </div>
     </nav>
     <router-view/>
+    <div class="footer">footer 구역입니다.</div>
   </div>
 </template>
 
@@ -62,42 +60,43 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+html,
+body {
+  height: 100%;
+}
+
 #app {
+  background-image: url('@/assets/beautiful-nature-3989829.jpg');
+  background-size: cover;
+  background-position: center center;
+  min-height: 100%;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 nav {
-  padding: 5px;
-  background-color: #d6dbe0;
+  padding: 10px;
+  background-color: #0f3a53;
   display: flex;
   justify-content: space-between;
 }
 
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: rgb(238, 225, 225);
   text-decoration: none; 
-  margin: 0 5px;
+  margin: 0 10px;
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  height: 50px;
-  width: 60px;
-  margin-right: 10px;
+  color: #2dbedb;
 }
 
 .nav-left {
@@ -108,5 +107,18 @@ nav a.router-link-exact-active {
 .nav-right {
   display: flex;
   align-items: center;
+}
+
+.router-view {
+  flex-grow: 1;
+}
+.logout-link {
+  color: rgb(238, 225, 225);
+}
+.footer {
+  height: 50px;
+  margin-top: auto;
+  background-color: rgb(159, 43, 43);
+  color: white;
 }
 </style>

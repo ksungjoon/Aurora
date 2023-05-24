@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <div>{{ getUsername}}의 추천 목록</div>
-        <div>{{this.watched_like_movie}}</div>
+    <div class ="container recommand">
+        <div>{{ getUsername }}님을 위한 추천 영화</div>
+        <!-- <div>{{this.watched_like_movie}}</div> -->
         <RecommandList :recommand_genre="recommand_genre"/>
         <button @click="loadMovies">클릭</button>
         <!-- <div>{{this.genre}}</div> -->

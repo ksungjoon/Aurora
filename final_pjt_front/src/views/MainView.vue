@@ -1,40 +1,50 @@
 <template>
   <div class="Main">
     <div class="container">
-      <h3 id="genre">장르 선택</h3>
-      <select v-model="genreid" @change="resetPage">
-        <option value="0">전체</option>
-        <option v-for="genre in genres" :key="genre.id" :value="genre.id">{{ genre.name }}</option>
-      </select>
-      <div class="row row-cols-1  row-cols-md-3 row-cols--5 g-4">
-        <MovieList
-          v-for="movie in displayedMovies"
-          :key="movie.id"
-          :movie="movie"
-        />
+      <div class="genre-buttons wrap-vertical" ref="genreContainer">
+        <div class="scroll-button left" @click="scrollLeft" ref="scrollLeftButton"> 왼쪽
+          <!-- <i class="fas fa-chevron-left"></i> -->
+        </div>
+        <button class="custom-btn btn-2" :class="{ active: genreid === '0' }" @click="changeGenre('0')">전체</button>
+        <button class="custom-btn btn-2" 
+          v-for="genre in genres"
+          :key="genre.id"
+          :class="{ active: genreid === genre.id }"
+          @click="changeGenre(genre.id)"
+        >
+          {{ genre.name }}
+        </button>
+        <div class="scroll-button right" @click="scrollRight" ref="scrollRightButton"> 오른쪽
+          <!-- <i class="fas fa-chevron-left"></i> -->
+        </div>
       </div>
-      <nav v-if="totalPages > 1">
-        <ul class="pagination">
-          <li class="page-item" :class="{ disabled: currentPage === 1 }">
-            <a class="page-link" href="#" @click="goToPage(currentPage - 1)" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item" v-for="pageNumber in visiblePages" :key="pageNumber" :class="{ active: currentPage === pageNumber }">
-            <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
-          </li>
-          <li class="page-item" :class="{ disabled: currentPage === totalPages }">
-            <a class="page-link" href="#" @click="goToPage(currentPage + 1)" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+      <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
+        <MovieList v-for="movie in displayedMovies" :key="movie.id" :movie="movie" />
+      </div>
+      <div v-if="totalPages > 1" class="pagination-container">
+        <div aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+              <a class="page-link" href="#" @click="goToPage(currentPage - 1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item" v-for="pageNumber in visiblePages" :key="pageNumber" :class="{ active: currentPage === pageNumber }">
+              <a class="page-link" href="#" @click="goToPage(pageNumber)">{{ pageNumber }}</a>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+              <a class="page-link" href="#" @click="goToPage(currentPage + 1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import MovieList from '@/components/MovieList.vue'
+import MovieList from '@/components/MovieList.vue';
 
 export default {
   name: 'MovieView',
@@ -60,7 +70,9 @@ export default {
       if (this.genreid === '0') {
         return this.$store.state.movieStore.totalMovies;
       } else {
-        return this.$store.state.movieStore.totalMovies.filter(movie => movie.genres.some(genre => genre.id === this.genreid));
+        return this.$store.state.movieStore.totalMovies.filter(movie =>
+          movie.genres.some(genre => genre.id === this.genreid)
+        );
       }
     },
     totalPages() {
@@ -89,9 +101,113 @@ export default {
         this.currentPage = pageNumber;
       }
     },
-    resetPage() {
+    changeGenre(genreId) {
+      this.genreid = genreId;
       this.currentPage = 1;
-    }
+    },
+    scrollLeft() {
+    const container = this.$refs.genreContainer;
+    const scrollLeftButton = this.$refs.scrollLeftButton;
+    container.scrollLeft -= scrollLeftButton.offsetWidth;
+  },
+
+  scrollRight() {
+    const container = this.$refs.genreContainer;
+    const scrollRightButton = this.$refs.scrollRightButton;
+    container.scrollLeft += scrollRightButton.offsetWidth;
   }
-}
+  }
+};
 </script>
+
+<style scoped>
+.pagination-container {
+  margin-top: 40px;
+  opacity: 0.7;
+}
+
+.genre-buttons {
+  display: flex;
+  margin-bottom: 20px;
+  margin-top: 50px;
+}
+
+.genre-buttons button {
+  margin-right: 10px;
+}
+
+.genre-buttons button.active {
+  font-weight: bold;
+  background: linear-gradient(0deg, rgb(122, 33, 218) 0%, rgb(76, 0, 104) 100%);
+}
+.wrap-vertical{
+  width: 100%;
+  padding: 10px;
+  color: #112031;
+   /* 가로 스크롤 */
+  overflow-x: hidden;
+  white-space: nowrap;
+  position: relative;
+  
+}
+.wrap-vertical::-webkit-scrollbar{
+    display: none; 
+}
+
+.scroll-button {
+  position: sticky;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #112031;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-button:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.scroll-button.left {
+  left: 0;
+}
+
+.scroll-button.right {
+  right: 0;
+}
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 7px 15px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+.btn-2 {
+  background: rgb(116, 51, 221);
+  background: linear-gradient(0deg, rgb(38, 128, 159) 0%, rgb(26, 210, 242) 100%);
+  border: none;
+  
+}
+.btn-2:before {
+  height: 0%;
+  width: 2px;
+}
+</style>

@@ -2,6 +2,13 @@
   <div class="profile-container">
     <div class="d-flex justify-content-between">
     <h1>{{ getUsername }}의 프로필</h1>
+
+    <img :src="profile_img" alt="Uploaded Image" v-if="profile_img">
+      <input type="file" @change="handleFileUpload" ref="upimage">
+      <button @click="uploadImage">이미지 업로드</button>
+      
+      
+      
       <div>
         <h4>팔로워</h4>
         <h5>{{this.followers}}</h5>
@@ -10,7 +17,7 @@
       </div>
     </div>
     <div class="section-title">좋아요한 영화</div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">
       <ProfileLikeMovie
         v-for="likemovie in like_movie"
         :key="likemovie.id"
@@ -23,7 +30,7 @@
         <br>
       </p>
     <div class="section-title">봤던 영화</div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">
       <ProfileWatchedMovie
         v-for="watchedmovie in watched_movie"
         :key="watchedmovie.id"
@@ -49,10 +56,12 @@ export default {
   name: 'ProfileView',
   data() {
     return {
-      like_movie: null,
-      watched_movie: null,
+      like_movie: [],
+      watched_movie: [],
       followers:null,
-      followings:null
+      followings:null,
+      imageFile: null,
+      profile_img: '',
     }
   },
   components: {
@@ -106,14 +115,47 @@ export default {
           console.log(err);
         
       });
+    },
+    handleFileUpload(event) {
+      this.imageFile = event.target.files[0];
+      // console.log(this.imageFile)
+    },
+    uploadImage() {
+      const file = this.$refs.upimage.files[0];
+      console.log(file)
+      const formData = new FormData();
+      console.log(this.imageFile)
+      formData.append('image', file);
+      formData.append('text', 'hi')
+      console.log(formData)
+
+      axios.put(`${API_URL}/accounts/upload_img/${this.getUsername}/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Token ${this.$store.state.loginStore.token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        console.log('확인');
+        this.profile_img = res.data.image_url
+        console.log(this.profile_img)
+        // 이미지 업로드 성공 후 처리
+      })
+      .catch((err) => {
+        console.error(err);
+        // 업로드 실패 시 처리
+      });
     }
+
   }
-};
+}
+
 </script>
 
 <style scoped>
 .profile-container {
-  max-width: 800px;
+  max-width: 80%;
   margin: 0 auto;
   padding: 20px;
 }
