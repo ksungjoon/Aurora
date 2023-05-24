@@ -10,8 +10,6 @@
     <h1>{{ getUsername }}의 프로필</h1>
     {{ profile_img }}
     <img :src="getImageUrl" alt="Profile Image">
-<!-- 
-    <img :src="`http://localhost:8000${profile_img}`" alt="Profile Image"> -->
 
 
 
@@ -69,7 +67,6 @@ export default {
   name: 'ProfileView',
   data() {
     return {
-<<<<<<< HEAD
       followermodal:false,
       followingmodal:false,
       like_movie: null,
@@ -78,14 +75,8 @@ export default {
       followings_length:null,
       followers:null,
       follwings:null,
-=======
-      like_movie: [],
-      watched_movie: [],
-      followers:null,
-      followings:null,
       imageFile: null,
       profile_img: '',
->>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
     }
   },
   components: {
@@ -151,7 +142,6 @@ export default {
         
       });
     },
-<<<<<<< HEAD
     isFollowerViewed(){
       this.followermodal=true
     },
@@ -164,7 +154,6 @@ export default {
     endFollowingViewed(){
       this.followingmodal=false
     },
-=======
     handleFileUpload(event) {
       this.imageFile = event.target.files[0];
       console.log(this.imageFile)
@@ -197,7 +186,6 @@ export default {
       });
     }
 
->>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
   }
 }
 
@@ -206,8 +194,10 @@ export default {
 <style scoped>
 .profile-container {
   max-width: 80%;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
 }
 
 h1 {
