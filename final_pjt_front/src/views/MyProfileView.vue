@@ -1,5 +1,11 @@
 <template>
   <div class="profile-container">
+    <div>
+      <FollowModal v-if='followermodal===true' @endFollowerViewed="endFollowerViewed" :followers='followers'/>
+    </div>
+    <div>
+      <FollowingModal v-if='followingmodal===true' @endFollowingViewed="endFollowingViewed" :followings='followings'/>
+    </div>
     <div class="d-flex justify-content-between">
     <h1>{{ getUsername }}의 프로필</h1>
     {{ profile_img }}
@@ -15,10 +21,10 @@
       
       
       <div>
-        <h4>팔로워</h4>
-        <h5>{{this.followers}}</h5>
-        <h4>팔로잉</h4>
-        <h5>{{this.followings}}</h5>
+        <div @click="isFollowerViewed"><h4 >팔로워</h4></div>
+        <h5>{{this.followers_length}}</h5>
+        <div @click="isFollowingViewed"><h4 >팔로잉</h4></div>
+        <h5>{{this.followings_length}}</h5>
       </div>
     </div>
     <div class="section-title">좋아요한 영화</div>
@@ -52,6 +58,8 @@
 
 <script>
 import axios from 'axios'
+import FollowingModal from '@/components/FollowingModal.vue'
+import FollowModal from '@/components/FollowModal.vue'
 import ProfileLikeMovie from '@/components/ProfileLikeMovie.vue'
 import ProfileWatchedMovie from '@/components/ProfileWatchedMovie.vue'
 import { mapGetters } from 'vuex';
@@ -61,16 +69,28 @@ export default {
   name: 'ProfileView',
   data() {
     return {
+<<<<<<< HEAD
+      followermodal:false,
+      followingmodal:false,
+      like_movie: null,
+      watched_movie: null,
+      followers_length:null,
+      followings_length:null,
+      followers:null,
+      follwings:null,
+=======
       like_movie: [],
       watched_movie: [],
       followers:null,
       followings:null,
       imageFile: null,
       profile_img: '',
+>>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
     }
   },
   components: {
-
+    FollowModal,
+    FollowingModal,
     ProfileLikeMovie,
     ProfileWatchedMovie
   },
@@ -121,15 +141,30 @@ export default {
       .then((res) => {
           console.log(res.data)
           console.log('제발')
-          this.followers=res.data.followers.length;
-          this.followings=res.data.followings.length;
-          
+          this.followers_length=res.data.followers.length;
+          this.followings_length=res.data.followings.length;
+          this.followers=res.data.followers
+          this.followings=res.data.followings
       })
       .catch((err) => {
           console.log(err);
         
       });
     },
+<<<<<<< HEAD
+    isFollowerViewed(){
+      this.followermodal=true
+    },
+    isFollowingViewed(){
+      this.followingmodal=true
+    },
+    endFollowerViewed(){
+      this.followermodal=false
+    },
+    endFollowingViewed(){
+      this.followingmodal=false
+    },
+=======
     handleFileUpload(event) {
       this.imageFile = event.target.files[0];
       console.log(this.imageFile)
@@ -162,6 +197,7 @@ export default {
       });
     }
 
+>>>>>>> cc05e54fc97346a989ad73c7bd441d97240ad960
   }
 }
 
