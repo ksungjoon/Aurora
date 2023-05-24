@@ -2,10 +2,15 @@
   <div class="profile-container">
     <div class="d-flex justify-content-between">
     <h1>{{ getUsername }}의 프로필</h1>
+    {{ profile_img }}
+    <img :src="getImageUrl" alt="Profile Image">
+<!-- 
+    <img :src="`http://localhost:8000${profile_img}`" alt="Profile Image"> -->
 
-    <img :src="profile_img" alt="Uploaded Image" v-if="profile_img">
-      <input type="file" @change="handleFileUpload" ref="upimage">
-      <button @click="uploadImage">이미지 업로드</button>
+
+
+    <input type="file" @change="handleFileUpload" ref="upimage">
+    <button @click="uploadImage">이미지 업로드</button>
       
       
       
@@ -76,12 +81,21 @@ export default {
   },
   computed: {
     ...mapGetters(['getUsername', 'profile']),
+    getImageUrl() {
+      const defaultProfileImg = require('@/assets/default_profile.jpg');
+      if (this.profile && this.profile_img) {
+        return `http://localhost:8000${this.profile_img}`;
+      } else {
+        return defaultProfileImg;
+      }
+    }
   },
   methods: {
     likeMovieList() {
       axios.get(`${API_URL}/accounts/profile/${this.getUsername}/`)
         .then((res) => {
           this.like_movie = res.data.like_movies;
+          this.profile_img = res.data.profile_img;
         })
         .catch((err) => {
           console.log(err);
@@ -118,7 +132,7 @@ export default {
     },
     handleFileUpload(event) {
       this.imageFile = event.target.files[0];
-      // console.log(this.imageFile)
+      console.log(this.imageFile)
     },
     uploadImage() {
       const file = this.$refs.upimage.files[0];
@@ -126,7 +140,7 @@ export default {
       const formData = new FormData();
       console.log(this.imageFile)
       formData.append('image', file);
-      formData.append('text', 'hi')
+
       console.log(formData)
 
       axios.put(`${API_URL}/accounts/upload_img/${this.getUsername}/`, formData, {
@@ -138,7 +152,7 @@ export default {
       .then((res) => {
         console.log(res.data);
         console.log('확인');
-        this.profile_img = res.data.image_url
+        this.profile_img = res.data.profile_img
         console.log(this.profile_img)
         // 이미지 업로드 성공 후 처리
       })
