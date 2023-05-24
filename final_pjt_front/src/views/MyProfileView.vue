@@ -1,5 +1,21 @@
 <template>
   <div class="profile-container">
+    <transition name="modal" v-if='imgmodal===true'>
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+            <div class="modal-container">
+                <h5>이미지 업로드</h5>
+                <img :src="getImageUrl" alt="Profile Image">
+                <hr>
+                    <input type="file" @change="handleFileUpload" ref="upimage">
+                    <button @click="uploadImage">이미지 업로드</button>              
+                <div>
+                    <button @click="endImg" class="btn btn-dark mt-3">닫기</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    </transition>
     <div>
       <FollowModal v-if='followermodal===true' @endFollowerViewed="endFollowerViewed" :followers='followers'/>
     </div>
@@ -8,14 +24,9 @@
     </div>
     <div class="d-flex justify-content-between">
     <h1>{{ getUsername }}의 프로필</h1>
-    {{ profile_img }}
-    <img :src="getImageUrl" alt="Profile Image">
+    <img :src="getImageUrl" alt="Profile Image" @click="startImg">
 
 
-
-    <input type="file" @change="handleFileUpload" ref="upimage">
-    <button @click="uploadImage">이미지 업로드</button>
-      
       
       
       <div>
@@ -58,6 +69,7 @@
 import axios from 'axios'
 import FollowingModal from '@/components/FollowingModal.vue'
 import FollowModal from '@/components/FollowModal.vue'
+// import ImgModal from '@/components/ImgModal.vue'
 import ProfileLikeMovie from '@/components/ProfileLikeMovie.vue'
 import ProfileWatchedMovie from '@/components/ProfileWatchedMovie.vue'
 import { mapGetters } from 'vuex';
@@ -77,13 +89,15 @@ export default {
       follwings:null,
       imageFile: null,
       profile_img: '',
+      imgmodal:false,
     }
   },
   components: {
     FollowModal,
     FollowingModal,
     ProfileLikeMovie,
-    ProfileWatchedMovie
+    ProfileWatchedMovie,
+    // ImgModal
   },
   created(){
     this.likeMovieList(),
@@ -153,6 +167,12 @@ export default {
     },
     endFollowingViewed(){
       this.followingmodal=false
+    },
+    startImg(){
+      this.imgmodal=true
+    },
+    endImg(){
+      this.imgmodal=false
     },
     handleFileUpload(event) {
       this.imageFile = event.target.files[0];
@@ -268,5 +288,62 @@ h1 {
 .profile-watched-movie h3 {
   font-size: 16px;
 }
+.modal-mask {
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: table;
+    transition: opacity 0.3s ease;
+    }
+
+    .modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+    }
+
+    .modal-container {
+    width: 300px;
+    margin: 0px auto;
+    padding: 20px 30px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
+    font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .modal-header h3 {
+    margin-top: 0;
+    color: #42b983;
+    }
+
+    .modal-body {
+    margin: 20px 0;
+    }
+
+    .modal-default-button {
+    float: right;
+    }
+    .modal-enter {
+    opacity: 0;
+    }
+
+    .modal-leave-active {
+    opacity: 0;
+    }
+
+    .modal-enter .modal-container,
+    .modal-leave-active .modal-container {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    }
+    .modal-body,
+    .modal {
+    color: #666 !important;
+    }
 
 </style>
