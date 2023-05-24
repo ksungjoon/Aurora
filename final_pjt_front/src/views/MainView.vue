@@ -138,7 +138,7 @@ export default {
 
 .genre-buttons button.active {
   font-weight: bold;
-  background: linear-gradient(0deg, rgb(122, 33, 218) 0%, rgb(76, 0, 104) 100%);
+  background: linear-gradient(0deg, rgb(61, 33, 218) 0%, rgb(16, 0, 104) 100%);
 }
 .wrap-vertical{
   width: 100%;

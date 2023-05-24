@@ -1,28 +1,30 @@
 <template>
-    <div class="container">
+    <div class="container detail">
         <div class="row">
             <div class="col-md-6">
                 <div class="image-box">
                 <img :src="movie?.poster_path" class="rounded image-thumbnail" alt="">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 content">
                 <div>
-                <h1>{{ movie?.title }}</h1>
-                <br>
-                <p>줄거리: {{ movie?.overview }}</p>
+                <h2>{{ movie?.title }}</h2>
+                <div class="four">
                 <p>
                     <img src="@/assets/star.png" alt="" class='star'>
                     {{ movie?.vote_average }}</p>
+                <div v-if="isLogin" class="">
+        
+                    <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
+                    <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
+                    
+                </div>
+                </div>
+                <p>줄거리: {{ movie?.overview }}</p>
+                
                 </div>
                 <br>
-                <div v-if="isLogin">
-                    <div>
-                    <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
-                    <br>
-                    <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
-                    </div>
-                </div>
+
             </div>
         </div>
         <br>
@@ -140,6 +142,12 @@ export default {
 }
 </script>
 <style scoped>
+.detail {
+    background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
 .profile-container {
   max-width: 800px;
   margin: 0 auto;
@@ -152,14 +160,26 @@ export default {
     margin:0 auto;
 } */
 .image-thumbnail {
-    width:100%;
-    height:100%;
+    width:90%;
+    height:90%;
     object-fit:cover;
+    margin-top: 30px;
+
 }
 .star {
     height:30px;
     width: 30px;
     margin: 10px auto;
+}
+.content{
+    margin-top: 40px;
+}
+.four {
+  display: flex;
+}
+
+.four > * {
+  margin-right: 10px; /* 각 요소 사이의 간격 조정을 위한 마진 설정 */
 }
 
 </style>
