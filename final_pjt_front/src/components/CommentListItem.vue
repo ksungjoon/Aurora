@@ -1,20 +1,32 @@
 <template>
-  <div class = "card mb-2">
-    <div>
-      <div class="card-header bg-light d-flex justify-content-start align-items-center">
-        <div class=" d-flex align-items-center"><p class="mr-7" @click="navigateToProfile">작성자: {{ comment.user.username }}</p></div>
-        <div class=" d-flex align-items-center"><p class="ml-2 align-items-center"><img src="@/assets/star.png" alt="" class="star">: {{ comment.score }}</p></div>
+  <div>
+    <div class="commentItem">
+      <div class="divide">
+        <div class="top">
+          <div class="image_area">
+            <img src="@/assets/default_profile.jpg" alt="프로필">
+            <div class="middle">
+              <div class="stars">
+                <img src="@/assets/star.png" alt="" class="star" v-for="n in comment.score" :key="n">
+              </div>
+              <div class="name">
+                <p @click="navigateToProfile">{{ comment.user.username }}</p>
+                <p>{{ formatDate(comment.created_at) }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="last">
+            <button type="button" @click="deleteComment">삭제</button> 
+          </div>
+        </div>
+        <div class="under">
+          <p>{{ comment.content }}</p>
+        </div>  
       </div>
-      <br>
-      <div>
-        <p>{{ comment.content }}</p>
-        <!-- <p>{{ comment.content }}</p> -->
-      </div>
-      <div><p class='text-muted'>작성일시: {{ formatDate(comment.created_at) }}</p></div>
-      <button type="button" class="btn btn-dark mt-3"  @click="deleteComment">삭제</button>
     </div>
   </div>
 </template>
+
 
 
 <script>
@@ -28,7 +40,7 @@ export default {
     comment: Object
   },
   computed: {
-    ...mapGetters(['getUsername']),
+    ...mapGetters(['getUsername', 'profile']),
     isSameUser() {
       return this.getUsername === this.comment.user.username;
     }
@@ -80,9 +92,44 @@ export default {
 </script>
 
 <style scoped>
+p {
+  margin: 0;
+}
 .star {
     height:20px;
     width: 20px;
     margin: 5px;
 }
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image_area {
+  display: flex;
+  align-items: center;
+  order: 1;
+}
+.image_area img{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.last {
+  order: 2; /* 오른쪽에 배치 */
+}
+.name {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.name p {
+  margin-right: 10px; /* 원하는 간격으로 설정 */
+}
+
 </style>

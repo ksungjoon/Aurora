@@ -1,29 +1,57 @@
 <template>
-    <div class ="container recommand">
-        <div>{{ getUsername }}님을 위한 추천 영화</div>
-        <!-- <div>{{this.watched_like_movie}}</div> -->
-        <RecommandList :recommand_genre="recommand_genre"/>
-        <button @click="loadMovies">클릭</button>
-        <!-- <div>{{this.genre}}</div> -->
-    </div>
+  <div class="container recommand">
+    <h1>{{ getUsername }}님을 위한 추천 영화</h1>
+    <swiper :options="swiperOptions">
+      <swiper-slide>
+        <RecommandList :recommand_genre="recommand_genre" v-if="recommand_genre" />
+      </swiper-slide>
+    </swiper>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { mapGetters } from 'vuex';
-import RecommandList from '@/components/RecommandList.vue'
-const API_URL = 'http://127.0.0.1:8000'
+import RecommandList from '@/components/RecommandList.vue';
+const API_URL = 'http://127.0.0.1:8000';
+
+import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import "swiper/css/swiper.css";
 
 export default {
     data(){
         return{
             watched_like_movie:[],
             genre:[],
-            recommand_genre:null
+            recommand_genre:null,
+            swiperOptions: {
+  // 슬라이드를 반복해서 보여줄지 여부
+  loop: true,
+  // 슬라이드가 자동으로 넘어갈지 여부
+  autoplay: {
+    delay: 5000, // 슬라이드 간의 딜레이 (밀리초 단위)
+    disableOnInteraction: false, // 사용자 상호작용 후에도 자동 재생 유지
+  },
+  // 페이징 버튼 (dot) 설정
+  pagination: {
+    el: '.swiper-pagination', // 페이징 요소 선택자
+    clickable: true, // 페이징 버튼을 클릭할 수 있는지 여부
+  },
+  // 네비게이션 버튼 (prev/next) 설정
+  navigation: {
+    nextEl: '.swiper-button-next', // 다음 버튼 선택자
+    prevEl: '.swiper-button-prev', // 이전 버튼 선택자
+  },
+  // 슬라이드의 너비와 높이를 자동으로 조정할지 여부
+  autoHeight: true,
+},
         }
     },
     components:{
-        RecommandList
+        RecommandList,
+         Swiper,
+       SwiperSlide,
+ 
     },
     computed: {
         ...mapGetters(['getUsername', 'profile']),
