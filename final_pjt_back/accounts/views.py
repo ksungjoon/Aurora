@@ -13,6 +13,12 @@ def user_profile(request, username):
     if request.method == 'GET':
         serializer = UserSerializer(user)
         return Response(serializer.data)
+@api_view(['GET'])
+def user_profile_id(request, id):
+    user = get_object_or_404(get_user_model(), id=id)
+    if request.method == 'GET':
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 @api_view(['GET', 'PUT'])
 def upload_img(request, username):
