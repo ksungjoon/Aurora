@@ -1,35 +1,37 @@
 <template>
     <div class="container detail">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="image-box">
                 <img :src="movie?.poster_path" class="rounded image-thumbnail" alt="">
                 </div>
-            </div>
-            <div class="col-md-6 content">
-                <div>
-                <h2>{{ movie?.title }}</h2>
-                <div class="four">
-                <p>
-                    <img src="@/assets/star.png" alt="" class='star'>
-                    {{ movie?.vote_average }}</p>
-                <div v-if="isLogin" class="">
+                <div v-if="isLogin" class="loginarea">
         
                     <MovieLike :movie='movie' :likes_count='likes_count' :liked='liked' @getmovielike="getMovieLike"/>
                     <MovieWatched :movie='movie' :watched='watched' @getmoviewatched="getMovieWatched"/> 
                     
                 </div>
+            </div>
+            <div class="col-md-8 content">
+                <div>
+                <h1>{{ movie?.title }}</h1>
+                <button v-for="genre in movie.genres" :key="genre.id" class="w-btn w-btn-indigo">
+                    <span>{{ genre.name }}</span>
+                </button>
+                <div class="four">
+                <p><img src="@/assets/star.png" alt="" class='star'>{{ movie?.vote_average }}</p>
                 </div>
-                <p>줄거리: {{ movie?.overview }}</p>
                 
+                <p>{{ movie?.overview }}</p>
                 </div>
-                <br>
-
+                <div class="comment">
+                    <p>Comments</p>
+                <CommentList :movie="movie" :comments='comments'/>
+                <CommentForm @create-comment="createComment" :movie="movie"/>
+                </div>
             </div>
         </div>
-        <br>
-        <CommentForm @create-comment="createComment" :movie="movie"/>
-        <CommentList :movie="movie" :comments='comments'/>
+        
         <!-- {{liked}} {{likes_count}}
         {{watched}} -->
     </div>
@@ -147,18 +149,8 @@ export default {
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
+  padding-right: 30px;
 }
-.profile-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-/* .image-box {
-    width:380px;
-    height:220px;
-    overflow:hidden;
-    margin:0 auto;
-} */
 .image-thumbnail {
     width:90%;
     height:90%;
@@ -167,19 +159,51 @@ export default {
 
 }
 .star {
-    height:30px;
-    width: 30px;
-    margin: 10px auto;
+    height:25px;
+    width: 25px;
+    margin-right: 10px;
+    margin-bottom: 5px;
 }
 .content{
     margin-top: 40px;
 }
 .four {
-  display: flex;
+  text-align: right;
+}
+.loginarea{
+   display: flex;
+    flex-direction: row;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;
+    
+}
+.loginarea > *{
+    margin: 20px 20px;
+    
 }
 
-.four > * {
-  margin-right: 10px; /* 각 요소 사이의 간격 조정을 위한 마진 설정 */
+.w-btn {
+    position: relative;
+    border: none;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-family: "paybooc-Light", sans-serif;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.25s;
+    margin: 0 5px;
 }
+.w-btn-indigo {
+    background-color: aliceblue;
+    color: #1e6b7b;
+}
+
+.comment{
+    width: 100%;
+    background-color: gray;
+}
+
 
 </style>
