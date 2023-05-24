@@ -1,7 +1,5 @@
 <template>
     <div>
-        <div>hi</div>
-        <div>{{this.recommand_genre}}</div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
             <MovieList
             v-for="movie in filteredMovies"
@@ -33,14 +31,14 @@ export default {
     },
     computed: {
         limitedMovies() {
-        const limit = 80;
+        const limit = 5;
         return this.$store.state.movieStore.totalMovies.slice(0, limit);
         },
         genres() {
         return this.$store.state.movieStore.genres;
         },
         filteredMovies() {
-        if (this.recommand_genre === 0) {
+        if (this.recommand_genre === null) {
             return this.limitedMovies;
         } else {
             const moviesWithSameGenre = this.$store.state.movieStore.totalMovies.filter(movie =>
