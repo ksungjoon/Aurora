@@ -6,6 +6,7 @@ from .serializers import UserSerializer, UserImgSerializer
 # from .models import Comment, Profile
 from .models import User
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 
 @api_view(['GET'])
 def user_profile(request, username):
@@ -14,10 +15,30 @@ def user_profile(request, username):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
+# @api_view(['GET', 'PUT'])
+# def upload_img(request, username):
+#     user = get_object_or_404(get_user_model(), username=username)
+#     print(user)
+#     if request.method == 'GET':
+#         serializer = UserImgSerializer(user)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
+
+#     elif request.method == 'PUT':
+#         if request.user != user:
+#             return Response({'profile': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+#         serializer = UserImgSerializer(user, data=request.data, partial=True)
+#         print(serializer)
+#         if serializer.is_valid(raise_exception=True):
+#             serializer.save()
+#             print('hi')
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+        
+#     return Response({'profile': '잘못된 요청입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
 @api_view(['GET', 'PUT'])
 def upload_img(request, username):
-    user = get_object_or_404(get_user_model(), username=username)
-
+    user = get_object_or_404(User, username=username)
+    print(user)
     if request.method == 'GET':
         serializer = UserImgSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -25,15 +46,18 @@ def upload_img(request, username):
     elif request.method == 'PUT':
         if request.user != user:
             return Response({'profile': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
-
         serializer = UserImgSerializer(user, data=request.data, partial=True)
-        print(serializer)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            print('hello')
+            # 저장하기 전에 user.profile_img 필드에 데이터를 할당합니다.
+            print(request.data)
+            user.profile_img = request.data.get('image')
+            print(user.profile_img)
+            user.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-    
+        
     return Response({'profile': '잘못된 요청입니다.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 
