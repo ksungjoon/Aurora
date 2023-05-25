@@ -117,7 +117,7 @@ export default {
 
 <style scoped>
 .profile-container {
-  max-width: 80%;
+  width: 80%;
   margin: 50px auto;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.6);

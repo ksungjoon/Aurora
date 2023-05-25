@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'movies',
-    'articles',
     'accounts',
     'rest_framework',
     
