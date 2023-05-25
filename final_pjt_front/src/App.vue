@@ -35,7 +35,6 @@
       </div>
     </nav>
     <router-view/>
-    <div class="footer">footer 구역입니다.</div>
   </div>
 </template>
 
@@ -69,7 +68,7 @@ export default {
 
 <style scoped>
 /* @import url('https://fonts.googleapis.com/css2?family=Stylish&display=swap'); */
-
+@import url('https://fonts.googleapis.com/css?family=Jua:400');
 html,
 body {
   height: 100%;
@@ -80,7 +79,7 @@ body {
   background-size: cover;
   background-position: center center;
   min-height: 100%;
-  font-family: "Helvetica Nene", Helvetica, Arial, sans-serif; 
+  font-family: "Jua","Helvetica Nene", Helvetica, Arial, sans-serif; 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -124,12 +123,7 @@ nav a.router-link-exact-active {
 .logout-link {
   color: rgb(238, 225, 225);
 }
-.footer {
-  height: 50px;
-  margin-top: auto;
-  background-color: rgb(159, 43, 43);
-  color: white;
-}
+
 .search input{
   width: 100%;
   padding: 12px 24px;

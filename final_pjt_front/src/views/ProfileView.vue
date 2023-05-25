@@ -2,8 +2,10 @@
 
   <div class="profile-container">
     <div class="d-flex justify-content-between">
-    <h1 >{{ profile.username }}의 프로필</h1>
+
+    
     <ProfileItem :followed='followed' :followers_count='followers_count' :followings_count='followings_count' @getuserlike="getUserLike"/>
+
     </div>
     <div class="section-title">좋아요한 영화</div>
     <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">

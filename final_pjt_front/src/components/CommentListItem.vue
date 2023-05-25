@@ -4,7 +4,7 @@
       <div class="divide">
         <div class="top">
           <div class="image_area">
-            <img :src="getImageUrl" alt="프로필">
+            <img :src="getImageUrl" alt="프로필" class="profile">
             {{this.profile_image}}
             <div class="middle">
               <div class="stars">
@@ -150,10 +150,10 @@ p {
   order: 1;
 }
 .image_area .profile {
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 5px;
   margin-left: 10px;
 }
 

@@ -22,20 +22,27 @@
     <div>
       <FollowingModal v-if='followingmodal===true' @endFollowingViewed="endFollowingViewed" :followings='followings'/>
     </div>
-    <div class="d-flex justify-content-between">
-    <h1>{{ getUsername }}의 프로필</h1>
+<div class="total">
+  <div class="left_area col-4">
     <img :src="getImageUrl" alt="Profile Image" @click="startImg">
-
-
-      
-      
-      <div>
-        <div @click="isFollowerViewed"><h4 >팔로워</h4></div>
-        <h5>{{this.followers_length}}</h5>
-        <div @click="isFollowingViewed"><h4 >팔로잉</h4></div>
-        <h5>{{this.followings_length}}</h5>
-      </div>
+  </div>
+  <div class="rigrt_area col-8">
+    <div class="name">
+      <p>{{ getUsername }}의 프로필</p>
     </div>
+    <div class="fol">
+      <div class="fol-item" @click="isFollowerViewed">
+        <h4>팔로워</h4>
+      </div>
+      <h5>{{ this.followers_length }}</h5>
+      <div class="fol-item" @click="isFollowingViewed">
+        <h4>팔로잉</h4>
+      </div>
+      <h5>{{ this.followings_length }}</h5>
+    </div>
+  </div>
+</div>
+
     <div class="section-title">좋아요한 영화</div>
     <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">
       <ProfileLikeMovie
@@ -44,7 +51,7 @@
         :likemovie="likemovie"
       />
     </div>
-      <p v-if="!like_movie.length" class="d-flex justify-content-center">
+      <p v-if="!like_movie.length" class="d-flex justify-content-center" >
         <br>
         좋아요 누른 영화가 없어요 ㅠㅠ
         <br>
@@ -213,7 +220,7 @@ export default {
 
 <style scoped>
 .profile-container {
-  max-width: 80%;
+  width: 80%;
   margin: 50px auto;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.6);
@@ -345,5 +352,35 @@ h1 {
     .modal {
     color: #666 !important;
     }
+.fol {
+  display: flex;
+  align-items: center;
+}
 
+.fol-item {
+  margin-right: 10px;
+}
+.total {
+  display: flex;
+}
+
+.left_area {
+  margin-right: 20px;
+}
+.left_area img {
+  margin-top: 10px;
+  border-radius: 50%;
+}
+.rigrt_area {
+  flex: 1;
+}
+.name{
+  margin-top: 30px;
+}
+.name p{
+  font-size: 30px;
+}
+.modal-container img{
+  border-radius: 50%;
+}
 </style>

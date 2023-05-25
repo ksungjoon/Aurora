@@ -1,21 +1,35 @@
 <template>
 <div>
-  <img :src="getImageUrl" alt="Profile Image">
-<div class="d-flex justify-content-end">
-  <div class="p-2 bd-highlight">
-  <h4>팔로워</h4>
-  <h5>{{followers_count}}</h5>
+  <div class="total">
+  <div class="left_area col-4">
+    <img :src="getImageUrl" alt="Profile Image">
+  </div>
+  <div class="rigrt_area col-8">
+    <div class="name">
+      <h1 >{{ profile.username }}의 프로필</h1>
+    </div>
+    <div class="fol">
+      <div class="fol-item">
+        <h4>팔로워</h4>
+      </div>
+      <h5>{{followers_count}}</h5>
+      <div class="fol-item">
   <h4>팔로잉</h4>
   <h5>{{followings_count}}</h5>
-  </div>
-</div>
-<div>
-  <button type="button" class="btn btn-primary" @click="followUser">
+      <button type="button" class="btn btn-primary" @click="followUser">
     {{ followed ? '언팔로우' : '팔로우' }}
   </button>
+    </div>
+  </div>
 </div>
-</div>
+
+
   
+  
+  
+
+  </div>
+</div>
 </template>
 
 <script>

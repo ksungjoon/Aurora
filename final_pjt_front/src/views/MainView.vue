@@ -1,14 +1,15 @@
 <template>
-<div class="Main">
+  <div class="Main">
     <div class="container">
       <div class="genre-buttons-wrapper">
-        <div class="scroll-button scroll-left-button" @click="scrollLeft">
+        <div class="scroll-button scroll-left-button" @click="scrollLeft" :class="{ disabled: translateX === 0 || isLeftButtonDisabled }">
           <span>&lt;</span>
         </div>
         <div class="genre-buttons-container" ref="genreContainer">
           <div class="genre-buttons" :style="{ transform: `translateX(${translateX}px)` }">
             <button class="custom-btn btn-2" :class="{ active: genreid === '0' }" @click="changeGenre('0')">전체</button>
-            <button class="custom-btn btn-2" 
+            <button
+              class="custom-btn btn-2"
               v-for="genre in genres"
               :key="genre.id"
               :class="{ active: genreid === genre.id }"
@@ -18,7 +19,7 @@
             </button>
           </div>
         </div>
-        <div class="scroll-button scroll-right-button" @click="scrollRight">
+        <div class="scroll-button scroll-right-button" @click="scrollRight" :class="{ disabled: isMaxScrollReached }">
           <span>&gt;</span>
         </div>
       </div>
@@ -57,17 +58,24 @@ export default {
     MovieList
   },
   data() {
-    return {
+   return {
       genreid: '0',
       moviesPerPage: 15,
       currentPage: 1,
-      translateX: 0
+      translateX: 0,
+      maxScrollWidth: 0,
+      genreContainerWidth: 0,
+      isLeftButtonDisabled: true
     };
   },
   created() {
-    this.$store.dispatch('loadTotalMovies');
-    this.$store.dispatch('loadTotalGenres');
-  },
+  this.$store.dispatch('loadTotalMovies');
+  this.$store.dispatch('loadTotalGenres');
+  this.$nextTick(() => {
+    this.genreContainerWidth = this.$refs.genreContainer.offsetWidth;
+  });
+},
+
   computed: {
     genres() {
       return this.$store.state.movieStore.genres;
@@ -111,19 +119,29 @@ export default {
       this.genreid = genreId;
       this.currentPage = 1;
     },
+    isMaxScrollReached() {
+      return this.translateX >= this.maxScrollWidth; // 수정
+    },
     scrollLeft() {
-    const translateAmount = 200;
-    this.translateX = Math.max(this.translateX - translateAmount, 0);
-  },
+      const translateAmount = 200;
+      if (this.translateX !== 0) {
+        this.translateX = Math.max(this.translateX + translateAmount, 0);
+      }
+    },
 
-  scrollRight() {
-    const translateAmount = 200;
-    const maxScrollWidth = this.$refs.genreContainer.scrollWidth - this.$refs.genreContainer.clientWidth;
-    this.translateX = Math.min(this.translateX + translateAmount, maxScrollWidth);
+    scrollRight() {
+  const translateAmount = 200;
+  this.$nextTick(() => {
+    const genreContainerWidth = this.$refs.genreContainer.clientWidth;
+    const genreButtonsWidth = this.$refs.genreContainer.scrollWidth;
+    this.maxScrollWidth = genreButtonsWidth - genreContainerWidth;
+    if (this.translateX !== this.maxScrollWidth) {
+      this.translateX = Math.min(this.translateX - translateAmount, this.maxScrollWidth);
+    }
+  });
   }
 }
 }
-
 </script>
 
 <style scoped>
@@ -186,16 +204,16 @@ export default {
 
 .genre-buttons button.active {
   font-weight: bold;
-  background: linear-gradient(0deg, rgb(61, 33, 218) 0%, rgb(16, 0, 104) 100%);
+  background: linear-gradient(0deg, rgb(16, 0, 104) 0%, rgb(61, 33, 218) 100%);
 }
 
 .custom-btn {
   width: 130px;
   height: 40px;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 50px;
   padding: 7px 15px;
-  font-family: 'Lato', sans-serif;
+  font-family: "Jua";
   font-weight: 500;
   background: transparent;
   cursor: pointer;
@@ -210,7 +228,7 @@ export default {
 
 .btn-2 {
   background: rgb(116, 51, 221);
-  background: linear-gradient(0deg, rgb(38, 128, 159) 0%, rgb(26, 210, 242) 100%);
+  background: linear-gradient(0deg, rgb(34, 87, 221) 0%, rgb(26, 210, 242) 100%);
   border: none;
 }
 
