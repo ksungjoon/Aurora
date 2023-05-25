@@ -1,11 +1,11 @@
 <template>
   <div class="container recommand">
     <h1>{{ getUsername }}님을 위한 추천 영화</h1>
-    <swiper :options="swiperOptions">
-      <swiper-slide>
+    <!-- <swiper :options="swiperOptions"> -->
+      <!-- <swiper-slide> -->
         <RecommandList :recommand_genre="recommand_genre" v-if="recommand_genre" />
-      </swiper-slide>
-    </swiper>
+      <!-- </swiper-slide> -->
+    <!-- </swiper> -->
   </div>
 </template>
 
@@ -15,8 +15,8 @@ import { mapGetters } from 'vuex';
 import RecommandList from '@/components/RecommandList.vue';
 const API_URL = 'http://127.0.0.1:8000';
 
-import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import "swiper/css/swiper.css";
+// import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+// import "swiper/css/swiper.css";
 
 export default {
     data(){
@@ -49,8 +49,8 @@ export default {
     },
     components:{
         RecommandList,
-         Swiper,
-       SwiperSlide,
+      //    Swiper,
+      //  SwiperSlide,
  
     },
     computed: {
