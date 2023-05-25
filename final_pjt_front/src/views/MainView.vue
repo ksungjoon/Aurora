@@ -1,21 +1,25 @@
 <template>
-  <div class="Main">
+<div class="Main">
     <div class="container">
-      <div class="genre-buttons wrap-vertical" ref="genreContainer">
-        <div class="scroll-button left" @click="scrollLeft" ref="scrollLeftButton"> 왼쪽
-          <!-- <i class="fas fa-chevron-left"></i> -->
+      <div class="genre-buttons-wrapper">
+        <div class="scroll-button scroll-left-button" @click="scrollLeft">
+          <span>&lt;</span>
         </div>
-        <button class="custom-btn btn-2" :class="{ active: genreid === '0' }" @click="changeGenre('0')">전체</button>
-        <button class="custom-btn btn-2" 
-          v-for="genre in genres"
-          :key="genre.id"
-          :class="{ active: genreid === genre.id }"
-          @click="changeGenre(genre.id)"
-        >
-          {{ genre.name }}
-        </button>
-        <div class="scroll-button right" @click="scrollRight" ref="scrollRightButton"> 오른쪽
-          <!-- <i class="fas fa-chevron-left"></i> -->
+        <div class="genre-buttons-container" ref="genreContainer">
+          <div class="genre-buttons" :style="{ transform: `translateX(${translateX}px)` }">
+            <button class="custom-btn btn-2" :class="{ active: genreid === '0' }" @click="changeGenre('0')">전체</button>
+            <button class="custom-btn btn-2" 
+              v-for="genre in genres"
+              :key="genre.id"
+              :class="{ active: genreid === genre.id }"
+              @click="changeGenre(genre.id)"
+            >
+              {{ genre.name }}
+            </button>
+          </div>
+        </div>
+        <div class="scroll-button scroll-right-button" @click="scrollRight">
+          <span>&gt;</span>
         </div>
       </div>
       <div class="row row-cols-1 row-cols-md-3 row-cols-lg-5 g-4">
@@ -43,6 +47,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import MovieList from '@/components/MovieList.vue';
 
@@ -55,7 +60,8 @@ export default {
     return {
       genreid: '0',
       moviesPerPage: 15,
-      currentPage: 1
+      currentPage: 1,
+      translateX: 0
     };
   },
   created() {
@@ -106,18 +112,18 @@ export default {
       this.currentPage = 1;
     },
     scrollLeft() {
-    const container = this.$refs.genreContainer;
-    const scrollLeftButton = this.$refs.scrollLeftButton;
-    container.scrollLeft -= scrollLeftButton.offsetWidth;
+    const translateAmount = 200;
+    this.translateX = Math.max(this.translateX - translateAmount, 0);
   },
 
   scrollRight() {
-    const container = this.$refs.genreContainer;
-    const scrollRightButton = this.$refs.scrollRightButton;
-    container.scrollLeft += scrollRightButton.offsetWidth;
+    const translateAmount = 200;
+    const maxScrollWidth = this.$refs.genreContainer.scrollWidth - this.$refs.genreContainer.clientWidth;
+    this.translateX = Math.min(this.translateX + translateAmount, maxScrollWidth);
   }
-  }
-};
+}
+}
+
 </script>
 
 <style scoped>
@@ -126,10 +132,52 @@ export default {
   opacity: 0.7;
 }
 
-.genre-buttons {
+.genre-buttons-wrapper {
   display: flex;
+  align-items: center;
   margin-bottom: 20px;
   margin-top: 50px;
+  overflow: hidden;
+  position: relative;
+}
+
+.scroll-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background-color: #f5f5f5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.scroll-left-button {
+  margin-right: 10px;
+}
+
+.scroll-right-button {
+  margin-left: 10px;
+}
+
+.scroll-button:hover {
+  background-color: #e0e0e0;
+}
+
+.scroll-button span {
+  font-size: 20px;
+}
+
+.genre-buttons-container {
+  flex: 1;
+  overflow-x: hidden;
+}
+
+.genre-buttons {
+  display: flex;
+  transition: transform 0.3s ease;
+  white-space: nowrap;
 }
 
 .genre-buttons button {
@@ -140,48 +188,7 @@ export default {
   font-weight: bold;
   background: linear-gradient(0deg, rgb(61, 33, 218) 0%, rgb(16, 0, 104) 100%);
 }
-.wrap-vertical{
-  width: 100%;
-  padding: 10px;
-  color: #112031;
-   /* 가로 스크롤 */
-  overflow-x: hidden;
-  white-space: nowrap;
-  position: relative;
-  
-}
-.wrap-vertical::-webkit-scrollbar{
-    display: none; 
-}
 
-.scroll-button {
-  position: sticky;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #112031;
-  font-size: 24px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.scroll-button:hover {
-  background-color: rgba(255, 255, 255, 0.8);
-}
-
-.scroll-button.left {
-  left: 0;
-}
-
-.scroll-button.right {
-  right: 0;
-}
 .custom-btn {
   width: 130px;
   height: 40px;
@@ -195,17 +202,18 @@ export default {
   transition: all 0.3s ease;
   position: relative;
   display: inline-block;
-  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
-   7px 7px 20px 0px rgba(0,0,0,.1),
-   4px 4px 5px 0px rgba(0,0,0,.1);
+  box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+    7px 7px 20px 0px rgba(0, 0, 0, .1),
+    4px 4px 5px 0px rgba(0, 0, 0, .1);
   outline: none;
 }
+
 .btn-2 {
   background: rgb(116, 51, 221);
   background: linear-gradient(0deg, rgb(38, 128, 159) 0%, rgb(26, 210, 242) 100%);
   border: none;
-  
 }
+
 .btn-2:before {
   height: 0%;
   width: 2px;

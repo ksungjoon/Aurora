@@ -4,19 +4,19 @@
       <div class="divide">
         <div class="top">
           <div class="image_area">
-            <img src="@/assets/default_profile.jpg" alt="프로필">
+            <img src="@/assets/default_profile.jpg" class="profile" alt="프로필">
             <div class="middle">
               <div class="stars">
                 <img src="@/assets/star.png" alt="" class="star" v-for="n in comment.score" :key="n">
               </div>
               <div class="name">
-                <p @click="navigateToProfile">{{ comment.user.username }}</p>
-                <p>{{ formatDate(comment.created_at) }}</p>
+                <p class="nickname" @click="navigateToProfile">{{ comment.user.username }}</p>
+                <p class="date">{{ formatDate(comment.created_at) }}</p>
               </div>
             </div>
           </div>
           <div class="last">
-            <button type="button" @click="deleteComment">삭제</button> 
+            <a href="#" class="myButton" @click="deleteComment">삭제</a> 
           </div>
         </div>
         <div class="under">
@@ -95,10 +95,18 @@ export default {
 p {
   margin: 0;
 }
-.star {
-    height:20px;
-    width: 20px;
-    margin: 5px;
+.stars {
+  display: flex;
+  align-items: center;
+}
+.divide {
+  display: flex;
+  flex-direction: column;
+}
+.stars img {
+    height:15px;
+    width: 15px;
+    margin: 3px;
 }
 .top {
   display: flex;
@@ -111,9 +119,9 @@ p {
   align-items: center;
   order: 1;
 }
-.image_area img{
-  width: 40px;
-  height: 40px;
+.image_area .profile {
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   margin-right: 10px;
   margin-left: 10px;
@@ -130,6 +138,47 @@ p {
 
 .name p {
   margin-right: 10px; /* 원하는 간격으로 설정 */
+}
+.nickname {
+  font-size: 15px;
+  font-weight: bold;
+}
+.date{
+  font-size: 10px;
+  color: rgb(233, 218, 218);
+}
+.under {
+  text-align: left;
+  margin-bottom: 10px;
+}
+.under p{
+  font-size: 20px;
+  margin-left: 10px;
+}
+.myButton {
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	background-color:#ffffff;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	font-family:Arial;
+	font-size:10px;
+	font-weight:bold;
+	padding:3px 8px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+  margin-right: 10px;
+}
+.myButton:hover {
+	background:linear-gradient(to bottom, #f6f6f6 5%, #ffffff 100%);
+	background-color:#f6f6f6;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
 }
 
 </style>

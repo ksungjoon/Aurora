@@ -202,8 +202,15 @@ export default {
 
 .comment{
     width: 100%;
-    background-color: gray;
+    background-color: rgba(143, 135, 135, 0.5); 
+    border-radius: 5px;
+    padding-bottom: 5px;
 }
 
+.comment p{
+    font-size: 30px;
+    margin-left: 10px; /* 기본 왼쪽 여백 제거 */
+    text-align: left;
 
+}
 </style>
