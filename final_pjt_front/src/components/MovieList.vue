@@ -42,16 +42,17 @@ export default {
   width: 100%;
   height: 100%;
   transition: transform 0.3s;
+
 }
 
 .card-hover {
-  transform: scale(1.1); /* 커서 호버 시 카드 크기를 확대 */
+  transform: scale(1.1); 
 }
 
-.card-img-container {
+/* .card-img-container {
   width: 100%;
   height: 0;
-  padding-bottom: 150%; /* 이미지 비율에 맞게 조절할 수 있습니다. */
+  padding-bottom: 150%; 
   position: relative;
 }
 
@@ -62,5 +63,5 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} */
 </style>

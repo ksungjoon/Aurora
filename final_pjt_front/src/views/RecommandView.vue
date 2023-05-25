@@ -1,7 +1,7 @@
 <template>
     <div class ="container recommand">
         <br>
-        <div>{{ getUsername }}님을 위한 추천 영화</div>
+        <div class="title">{{ getUsername }}님을 위한 추천 영화</div>
         <br>
         <RecommandList :recommand_genre="recommand_genre"/>
        
@@ -106,3 +106,10 @@ export default {
   }
 }
 </script>
+<style scoped>
+.title{
+  font-size: 40px;
+  margin-top: 20px;
+  color:white;
+}
+</style>

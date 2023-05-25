@@ -39,6 +39,7 @@ export default {
   border-radius: 5px;
   margin-top: 50px;
   margin-bottom: 50px;
+  padding-bottom: 20px;
 }
 .search h1 {
   margin-top: 50px;

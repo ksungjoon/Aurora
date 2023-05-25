@@ -23,7 +23,7 @@
       <FollowingModal v-if='followingmodal===true' @endFollowingViewed="endFollowingViewed" :followings='followings'/>
     </div>
 <div class="total">
-  <div class="left_area col-4">
+  <div class="left_area col-4 image-container">
     <img :src="getImageUrl" alt="Profile Image" @click="startImg">
   </div>
   <div class="rigrt_area col-8">
@@ -33,12 +33,14 @@
     <div class="fol">
       <div class="fol-item" @click="isFollowerViewed">
         <h4>팔로워</h4>
+        <h5>{{ this.followers_length }}</h5>
       </div>
-      <h5>{{ this.followers_length }}</h5>
+      
       <div class="fol-item" @click="isFollowingViewed">
         <h4>팔로잉</h4>
+         <h5>{{ this.followings_length }}</h5>
       </div>
-      <h5>{{ this.followings_length }}</h5>
+     
     </div>
   </div>
 </div>
@@ -322,7 +324,10 @@ h1 {
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
     }
-
+  .modal-container img {
+    width: 200px;
+    height:200px;
+  }
     .modal-header h3 {
     margin-top: 0;
     color: #42b983;
@@ -358,7 +363,7 @@ h1 {
 }
 
 .fol-item {
-  margin-right: 10px;
+  margin: 0 10px;
 }
 .total {
   display: flex;
@@ -367,20 +372,29 @@ h1 {
 .left_area {
   margin-right: 20px;
 }
+
 .left_area img {
-  margin-top: 10px;
+  margin-top: 30px;
   border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
 .rigrt_area {
   flex: 1;
 }
-.name{
-  margin-top: 30px;
+
+.name {
+  text-align: left;
+  margin-top: 50px;
+  margin-bottom: 20px;
 }
+
 .name p{
-  font-size: 30px;
+  font-size: 40px;
 }
 .modal-container img{
   border-radius: 50%;
 }
+
 </style>

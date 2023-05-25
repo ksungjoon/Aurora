@@ -2,6 +2,9 @@
   <div id="app">
     <nav>
       <div class="nav-left">
+        <div class="logo">
+          <img src="@/assets/logo.png" alt="" class="aurora">
+        </div>
         <router-link to="/">Movie</router-link>
         <template v-if="isLogin">
           <router-link :to="{ name: 'RecommandView', params: { username: getUsername } }">
@@ -9,19 +12,18 @@
           </router-link>
         </template>
       </div>
+      <!-- <div class="nav-middle">
+        <div class="logo">
+          <img src="@/assets/logo.png" alt="" class="aurora">
+        </div>
+      </div> -->
       <div class="nav-right">
-
-
-        <div class="search container">
-          <input class="search input" type="text" placeholder="Search" @keydown.enter="searchMovies" v-model="searchKeyword">
+      
+        <div class="searching container">
+          <input class="searching input" type="text" placeholder="Search" @keydown.enter="searchMovies" v-model="searchKeyword">
         </div>
 
 
-        <!-- <div class="search-form">
-          <div class="search-box">
-            <input type="text" @keydown.enter="searchMovies" v-model="searchKeyword"/>
-          </div>
-        </div> -->
         <template v-if="isLogin">
           <a class="logout-link" @click="logout">Logout</a>
           <router-link :to="{ name: 'MyProfileView', params: { username: getUsername } }">
@@ -124,7 +126,7 @@ nav a.router-link-exact-active {
   color: rgb(238, 225, 225);
 }
 
-.search input{
+.searching input{
   width: 100%;
   padding: 12px 24px;
   background-color: transparent;
@@ -132,7 +134,7 @@ nav a.router-link-exact-active {
   font-size: 14px;
   line-height: 18px;
   
-  color: #575756;
+  color: #fafaf9;
   background-color: transparent;
 /*         background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg); */
 
@@ -141,28 +143,32 @@ nav a.router-link-exact-active {
   background-size: 18px 18px;
   background-position: 95% center;
   border-radius: 50px;
-  border: 1px solid #575757;
+  border: 1px solid #ede4e4;
   transition: all 250ms ease-in-out;
   backface-visibility: hidden;
   transform-style: preserve-3d;
         
 }   
 
-.search ::placeholder {
-  color: color(#575756 a(0.8));
+.searching ::placeholder {
+  color: #d2d2c0;
   text-transform: uppercase;
   letter-spacing: 1.5px;
 }
 
-.search :hover,:focus {
+.searching :hover,:focus {
     padding: 12px 0;
     outline: 0;
     border: 1px solid transparent;
-    border-bottom: 1px solid #575756;
+    border-bottom: 1px solid #cacabb;
     border-radius: 0;
     background-position: 100% center;
 }
     
-
+.aurora{
+  width: 80px;
+  height: 100%;
+  margin-right: 10px;
+}
 
 </style>

@@ -11,24 +11,22 @@
     <div class="fol">
       <div class="fol-item">
         <h4>팔로워</h4>
+        <h5>{{followers_count}}</h5>
       </div>
-      <h5>{{followers_count}}</h5>
+      
       <div class="fol-item">
-  <h4>팔로잉</h4>
-  <h5>{{followings_count}}</h5>
-      <button type="button" class="btn btn-primary" @click="followUser">
+        <h4>팔로잉</h4>
+        <h5>{{followings_count}}</h5>
+      </div>
+      <div class="fol-item ">
+    <button type="button" class="btn btn-primary" @click="followUser">
     {{ followed ? '언팔로우' : '팔로우' }}
   </button>
-    </div>
+  </div>
   </div>
 </div>
-
-
-  
-  
-  
-
   </div>
+
 </div>
 </template>
 
@@ -80,3 +78,43 @@ export default {
     },
 };
 </script>
+<style scoped>
+.total {
+  display: flex;
+}
+.left_area {
+  flex: 0 0 33.33%; /* Equivalent to col-4 */
+}
+.left_area img{
+  border-radius: 50%;
+  margin-top: 30px;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+.rigrt_area {
+  flex: 0 0 66.67%; /* Equivalent to col-8 */
+  margin-left: 30px;
+}
+.name {
+  text-align: left;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.fol {
+  display: flex;
+  align-items: center;
+}
+
+.fol-item {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.fol-item:last-child {
+  margin-right: 0;
+}
+
+</style>

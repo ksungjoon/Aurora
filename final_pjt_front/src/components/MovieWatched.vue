@@ -49,5 +49,6 @@ export default {
 <style scoped>
 .btn {
   border-radius: 50px;
+
 }
 </style>
