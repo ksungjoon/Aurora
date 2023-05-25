@@ -6,7 +6,7 @@
     <ProfileItem :followed='followed' :followers_count='followers_count' :followings_count='followings_count' @getuserlike="getUserLike"/>
     </div>
     <div class="section-title">좋아요한 영화</div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">
     <ProfileLikeMovie
       v-for="likemovie in like_movie"
       :key="likemovie.id"
@@ -21,7 +21,7 @@
     <br>
     <br>
     <div class="section-title">봤던 영화</div>
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="row row-cols-1  row-cols-md-3 row-cols-lg-5 g-4">
     <ProfileWatchedMovie
       v-for="watchedmovie in watched_movie"
       :key="watchedmovie.id"
@@ -116,9 +116,11 @@ export default {
 
 <style scoped>
 .profile-container {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 80%;
+  margin: 50px auto;
   padding: 20px;
+  background-color: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
 }
 
 h1 {

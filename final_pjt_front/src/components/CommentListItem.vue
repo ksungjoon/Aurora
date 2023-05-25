@@ -4,7 +4,8 @@
       <div class="divide">
         <div class="top">
           <div class="image_area">
-            <img src="@/assets/default_profile.jpg" alt="프로필">
+            <img :src="getImageUrl" alt="프로필">
+            {{this.profile_image}}
             <div class="middle">
               <div class="stars">
                 <img src="@/assets/star.png" alt="" class="star" v-for="n in comment.score" :key="n">
@@ -36,6 +37,11 @@ const API_URL = "http://127.0.0.1:8000";
 
 export default {
   name: "CommentListItem",
+  data(){
+    return{
+      profile_img:null
+    }
+  },
   props: {
     comment: Object
   },
@@ -43,7 +49,19 @@ export default {
     ...mapGetters(['getUsername', 'profile']),
     isSameUser() {
       return this.getUsername === this.comment.user.username;
+    },
+    getImageUrl() {
+      const defaultProfileImg = require('@/assets/default_profile.jpg');
+      if (this.profile_img) {
+        return `http://localhost:8000${this.profile_img}`;
+      } else {
+        return defaultProfileImg;
+      }
     }
+  },
+  created(){
+    this.LoadProfile(this.comment.user.username)
+
   },
   methods: {
     navigateToProfile() {
@@ -86,6 +104,18 @@ export default {
         minute: '2-digit',
         second: '2-digit',
       });
+    },
+    LoadProfile(username) {
+      axios.get(`${API_URL}/accounts/profile/${username}/`)
+        .then((res) => {
+          if(res.data.profile_img)
+          {
+            this.profile_img = res.data.profile_img
+          } 
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 };
