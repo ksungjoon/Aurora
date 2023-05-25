@@ -1,6 +1,6 @@
 <template>
   <div class="like">
-    <button class="heart-button" @click="movieLike">
+    <button class="heart-button" :class="{ active: liked }" @click="movieLike">
       <div class="heart-flip"></div>
       <span>{{ likes_count }}</span>
     </button>
@@ -58,6 +58,9 @@ export default {
   outline: none;
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+}
+.heart-button[liked="true"] {
+  --button-background: var(--background-active);
 }
 .heart .heart-flip,
 .heart-button .heart-flip {
