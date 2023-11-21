@@ -35,7 +35,7 @@
 - 포스터 클릭시 영화의 상세 페이지로 이동
 - 상단의 버튼을 통해 장르별로 영화를 필터링 할 수 있다.
 - 페이지네이션을 통해 다음 페이지로 이동할 수 있다.
-![Uploading 파란색 흰색 디지털리즘 기본 단순한 프레젠테이션 (1).png…]()
+<img width="80%" src="./exec/assets/main.png"/>
 
 ## nav영역
 - Movie, Recommand, search, Login, Logout, Profile, Signup 으로 구성되어있으며 로그인 여부에 따라 보이는 것이 다르다.
@@ -48,6 +48,12 @@
 - 댓글에는 별점과 내용이 포함되며 댓글 제출시 Comments창에 입력한 댓글이 입력되고 프로필 이미지와 별점, 이름, 댓글이 작성된 시간이 출력된다.
 - 오른쪽의 삭제 버튼을 통해 자신이 작성한 댓글을 삭제할 수 있다.
 - 댓글의 유저네임 클릭시 해당 유저의 프로필 페이지로 이동한다.
+<img width="80%" src="./exec/assets/detail.png"/>
+
+### 댓글창
+<img width="80%" src="./exec/assets/comment.png"/>
+
+
 
 ## 검색 페이지
 - 화면 상단 Nav의 검색창을 통해 영화를 검색할 수 있다.
@@ -57,6 +63,7 @@
 ## 추천 페이지
 - 유저가 좋아요 혹은 봤어요를 클릭한 영화 데이터를 기반으로 영화의 장르 개수를 저장하여 가장 많은 장르의 영화를 평점순으로 10개를 보여준다.
 - 만약 유저가 아직 좋아요나 봤어요를 클릭하지 않은 경우 인기순으로 10개를 보여준다.
+<img width="80%" src="./exec/assets/recomand.png"/>
 
 ## 프로필 페이지
 - 화면 상단의 Profile 클릭시 로그인된 유저의 프로필 페이지로 이동한다.
@@ -65,12 +72,14 @@
 - 팔로우, 팔로잉 클릭시 모달 창으로 팔로우, 팔로잉한 사람의 유저네임이 목록으로 띄워지고 해단 유저네임 클릭시 해당 유저의 프로필로 이동한다.
 - 좋아요한 영화와 봤던 영화가 보여진다.
 - 그 영화클릭시 해당영화의 상세 페이지로 이동한다.
+<img width="80%" src="./exec/assets/profile.png"/>
 
 ## 로그인, 회원 가입 페이지
 - 로그인이 되지 않은 상태라면 상단에 Login, Signup을 보여주며 클릭시 로그인, 회원가입창으로 이동한다.
+<img width="80%" src="./exec/assets/login.png"/>
 
-## PPT 발표 자료
--https://www.canva.com/design/DAFj4nAudck/lkiR80AC8eVMrlFpinBG5A/view?utm_content=DAFj4nAudck&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
+## ERD
+<img width="80%" src="./exec/assets/Image ERd.png"/>
 
 ## 느낀점
 - 김성준
