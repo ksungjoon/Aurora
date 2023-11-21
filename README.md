@@ -68,6 +68,9 @@
 ## 로그인, 회원 가입 페이지
 - 로그인이 되지 않은 상태라면 상단에 Login, Signup을 보여주며 클릭시 로그인, 회원가입창으로 이동한다.
 
+## PPT 발표 자료
+-https://www.canva.com/design/DAFj4nAudck/lkiR80AC8eVMrlFpinBG5A/view?utm_content=DAFj4nAudck&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink
+
 ## 느낀점
 - 김성준
     - 프로젝트가 시작되고 페어와 같이 설계부터 시작하였습니다. 프로젝트의 컨셉을 먼저 잡고 ERD를 작성했습니다
