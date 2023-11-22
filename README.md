@@ -79,7 +79,7 @@
 <img width="80%" src="./exec/assets/login.png"/>
 
 ## ERD
-<img width="80%" src="./exec/assets/Image ERd.png"/>
+<img width="80%" src="./exec/assets/Image ERD.png"/>
 
 ## 느낀점
 - 김성준
